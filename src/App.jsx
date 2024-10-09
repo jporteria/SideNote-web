@@ -1,36 +1,56 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import "./App.css";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
 import { nanoid } from "nanoid";
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const context = createContext({});
+export const NotesContext = createContext({});
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(() => {
+    try {
+      const savedNotes = localStorage.getItem("notes");
+      return savedNotes ? JSON.parse(savedNotes) : [];
+    } catch (error) {
+      console.error("Error parsing notes from localStorage:", error);
+      return []; // Return an empty array if there's an error
+    }
+  });
+
   const [currentNoteId, setCurrentNoteId] = useState(
     (notes[0] && notes[0].id) || ""
   );
 
-  function createNewNote() {
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
+  const createNewNote = () => {
     const newNote = {
       id: nanoid(),
-      body: "# Type your note's here",
+      body: "",
     };
     setNotes((prevNotes) => [...prevNotes, newNote]);
     setCurrentNoteId(newNote.id);
-  }
+
+    console.log(`this is a log on the createnNewNote function after clicked`);
+    console.table(notes);
+  };
+  // const createNewNote = createNewNoteFunction();
 
   function updateNote(text) {
-    setNotes((oldNotes) =>
-      oldNotes.map((oldNote) => {
-        return oldNote.id === currentNoteId
-          ? { ...oldNote, body: text }
-          : oldNote;
-      })
-    );
+    console.log(`updating notes`, currentNoteId, text);
+    // Only update if the text is not the default value
+    if (text !== "") {
+      setNotes((oldNotes) =>
+        oldNotes.map((oldNote) => {
+          return oldNote.id === currentNoteId
+            ? { ...oldNote, body: text }
+            : oldNote;
+        })
+      );
+    }
   }
 
   function findCurrentNoteFunction() {
@@ -43,7 +63,7 @@ function App() {
   const findCurrentNote = findCurrentNoteFunction();
 
   return (
-    <context.Provider
+    <NotesContext.Provider
       value={{
         notes,
         findCurrentNote,
@@ -67,7 +87,7 @@ function App() {
           </div>
         )}
       </main>
-    </context.Provider>
+    </NotesContext.Provider>
   );
 }
 

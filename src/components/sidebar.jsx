@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import { context } from "../App";
+import { NotesContext } from "../App";
 
 export default function Sidebar() {
-  const { notes, findCurrentNote, setCurrentNoteId, createNewNote } = useContext(context);
-  // console.log(notes)
-  // console.log(findCurrentNote)
+  const { notes, findCurrentNote, setCurrentNoteId, createNewNote } =
+    useContext(NotesContext);
 
   const noteElements = notes.map((note, index) => (
     <div key={note.id}>
@@ -23,9 +22,11 @@ export default function Sidebar() {
     <section className="pane sidebar">
       <div className="sidebar--header">
         <h3>Notes</h3>
-        <button className="new-note" onClick={createNewNote}>+</button>
       </div>
       {noteElements}
+      <button className="new-note" onClick={createNewNote}>
+        Add new note
+      </button>
     </section>
   );
 }
