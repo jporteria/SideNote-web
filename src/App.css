@@ -34,13 +34,18 @@ body {
 }
 
 .pane {
-  overflow-y: auto;
+  overflow-y: hidden;
   /* padding: 10px; */
 }
 
 .quill{
   height: 100%;
 }
+
+/* .ql-toolbar{
+  position: fixed;
+  box-shadow: 5px 5px 5px gray;
+} */
 
 /* side bar header styles */
 .sidebar--header {
@@ -116,4 +121,14 @@ button:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* delete notes button */
+.delete-button{
+  background: none;
+  border: none;
+  display: none;
+}
+.title:hover > .delete-button{
+  display: block;
 }

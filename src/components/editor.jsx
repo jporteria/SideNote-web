@@ -4,13 +4,13 @@ import "react-quill/dist/quill.snow.css";
 import { NotesContext } from "../App";
 
 export default function Editor() {
-    const { findCurrentNote, updateNote } = useContext(NotesContext);
-    const [editorText, setEditorText] = useState(findCurrentNote.body);
+    const { currentNote, updateNote } = useContext(NotesContext);
+    const [editorText, setEditorText] = useState(currentNote.body);
 
     // Update the editor state when the current note changes
     useEffect(() => {
-        setEditorText(findCurrentNote.body);
-    }, [findCurrentNote]);
+        setEditorText(currentNote.body);
+    }, [currentNote]);
 
     // Update note when editor text changes
     const handleEditorChange = (text) => {

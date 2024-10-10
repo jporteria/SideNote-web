@@ -19,12 +19,15 @@ function App() {
   });
 
   const [currentNoteId, setCurrentNoteId] = useState(
-    (notes[0] && notes[0].id) || ""
+    (notes[0]?.id) || ""
   );
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
+
+  const currentNote =
+    notes.find((note) => note.id === currentNoteId) || notes[0];
 
   const createNewNote = () => {
     const newNote = {
@@ -33,14 +36,10 @@ function App() {
     };
     setNotes((prevNotes) => [...prevNotes, newNote]);
     setCurrentNoteId(newNote.id);
-
-    console.log(`this is a log on the createnNewNote function after clicked`);
-    console.table(notes);
   };
   // const createNewNote = createNewNoteFunction();
 
   function updateNote(text) {
-    console.log(`updating notes`, currentNoteId, text);
     // Only update if the text is not the default value
     if (text !== "") {
       setNotes((oldNotes) =>
@@ -53,23 +52,28 @@ function App() {
     }
   }
 
-  function findCurrentNoteFunction() {
-    return (
-      notes.find((note) => {
-        return note.id === currentNoteId;
-      }) || notes[0]
-    );
+  function deleteNote(event, noteId) {
+    event.stopPropagation();
+    setNotes((oldNotes) => oldNotes.filter((note) => note.id !== noteId));
   }
-  const findCurrentNote = findCurrentNoteFunction();
+
+  // function findCurrentNoteFunction() {
+  //   return (
+  //     notes.find((note) => {
+  //       return note.id === currentNoteId;
+  //     }) || notes[0]
+  //   );
+  // }
 
   return (
     <NotesContext.Provider
       value={{
         notes,
-        findCurrentNote,
+        currentNote,
         setCurrentNoteId,
         updateNote,
         createNewNote,
+        deleteNote,
       }}
     >
       <main>
