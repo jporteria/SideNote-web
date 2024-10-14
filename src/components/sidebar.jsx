@@ -1,17 +1,21 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { NotesContext } from "../App";
 import DOMPurify from "dompurify";
 
 export default function Sidebar() {
-  const {
-    notes,
-    currentNote,
-    setCurrentNoteId,
-    createNewNote,
-    deleteNote,
-  } = useContext(NotesContext);
+  const { notes, currentNote, setCurrentNoteId, createNewNote, deleteNote } =
+    useContext(NotesContext);
 
-  const noteElements = notes.map((note, index) => {
+  const sortedNotes = notes.sort((a, b) => {
+    // Convert createdAt fields to timestamps if necessary
+    const aCreatedAt = new Date(a.createdAt).getTime();
+    const bCreatedAt = new Date(b.createdAt).getTime();
+
+    // Compare timestamps in descending order (newest first)
+    return aCreatedAt - bCreatedAt;
+  });
+
+  const noteElements = sortedNotes.map((note, index) => {
     const bodyContent = note.body || "";
     const plainTextWithNewLines = bodyContent.replace(/<\/?p>/gi, "\n");
     const plainText = DOMPurify.sanitize(plainTextWithNewLines, {
@@ -28,10 +32,7 @@ export default function Sidebar() {
           onClick={() => setCurrentNoteId(note.id)}
         >
           <h4 className="text-snippet">{firstLine}</h4>
-          <button
-            className="delete-button"
-            onClick={(event) => deleteNote(event, note.id)}
-          >
+          <button className="delete-button" onClick={() => deleteNote(note.id)}>
             x
           </button>
         </div>

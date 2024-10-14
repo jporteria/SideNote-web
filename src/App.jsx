@@ -3,60 +3,89 @@ import "./App.css";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
+import { onSnapshot, doc, addDoc, deleteDoc, setDoc } from "firebase/firestore";
+import { notesCollection, db } from "./firebase";
 
 export const NotesContext = createContext({});
 
 function App() {
-  const [notes, setNotes] = useState(() => {
-    try {
-      const savedNotes = localStorage.getItem("notes");
-      return savedNotes ? JSON.parse(savedNotes) : [];
-    } catch (error) {
-      console.error("Error parsing notes from localStorage:", error);
-      return []; // Return an empty array if there's an error
-    }
-  });
+  const [notes, setNotes] = useState([]);
+  // try {
+  //   const savedNotes = localStorage.getItem("notes");
+  //   return savedNotes ? JSON.parse(savedNotes) : [];
+  // } catch (error) {
+  //   console.error("Error parsing notes from localStorage:", error);
+  //   return []; // Return an empty array if there's an error
+  // }
 
-  const [currentNoteId, setCurrentNoteId] = useState(
-    (notes[0]?.id) || ""
-  );
-
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+  const [currentNoteId, setCurrentNoteId] = useState(notes[0]?.id || "");
+  // const [tempNoteText, setTempNoteText] = useState("")
 
   const currentNote =
     notes.find((note) => note.id === currentNoteId) || notes[0];
 
-  const createNewNote = () => {
-    const newNote = {
-      id: nanoid(),
-      body: "",
-    };
-    setNotes((prevNotes) => [...prevNotes, newNote]);
-    setCurrentNoteId(newNote.id);
-  };
-  // const createNewNote = createNewNoteFunction();
+  useEffect(() => {
+    const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
+      const notesArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNotes(notesArr);
+    });
+    return unsubscribe;
+  }, []);
 
-  function updateNote(text) {
-    // Only update if the text is not the default value
-    if (text !== "") {
-      setNotes((oldNotes) =>
-        oldNotes.map((oldNote) => {
-          return oldNote.id === currentNoteId
-            ? { ...oldNote, body: text }
-            : oldNote;
-        })
-      );
+  useEffect(() => {
+    if (!currentNoteId) {
+      setCurrentNoteId(notes[0]?.id);
     }
+  }, [notes]);
+
+  // const createNewNote = () => {
+  //   const newNote = {
+  //     id: nanoid(),
+  //     body: "",
+  //   };
+  //   setNotes((prevNotes) => [...prevNotes, newNote]);
+  //   setCurrentNoteId(newNote.id);
+  // };
+
+  async function createNewNote() {
+    const newNote = {
+      body: "",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    const newNoteRef = await addDoc(notesCollection, newNote);
+    setCurrentNoteId(newNoteRef.id);
+  }
+  // function updateNote(text) {
+  //   // Only update if the text is not the default value
+  //   if (text !== "") {
+  //     setNotes((oldNotes) =>
+  //       oldNotes.map((oldNote) => {
+  //         return oldNote.id === currentNoteId
+  //           ? { ...oldNote, body: text }
+  //           : oldNote;
+  //       })
+  //     );
+  //   }
+  // }
+  async function updateNote(text) {
+    const docRef = doc(db, "notes", currentNoteId);
+    await setDoc(docRef, { body: text }, { merge: true });
   }
 
-  function deleteNote(event, noteId) {
-    event.stopPropagation();
-    setNotes((oldNotes) => oldNotes.filter((note) => note.id !== noteId));
+  // function deleteNote(event, noteId) {
+  //   event.stopPropagation();
+  //   setNotes((oldNotes) => oldNotes.filter((note) => note.id !== noteId));
+  // }
+  
+  async function deleteNote(noteId) {
+    const docRef = doc(db, "notes", noteId);
+    await deleteDoc(docRef);
   }
-
   // function findCurrentNoteFunction() {
   //   return (
   //     notes.find((note) => {
