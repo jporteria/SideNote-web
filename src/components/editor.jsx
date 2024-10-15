@@ -4,18 +4,18 @@ import "react-quill/dist/quill.snow.css";
 import { NotesContext } from "../App";
 
 export default function Editor() {
-    const { currentNote, updateNote } = useContext(NotesContext);
-    const [editorText, setEditorText] = useState(currentNote.body);
+    const { tempNoteText, setTempNoteText } = useContext(NotesContext);
+    const [editorText, setEditorText] = useState(tempNoteText);
 
     // Update the editor state when the current note changes
     useEffect(() => {
-        setEditorText(currentNote.body);
-    }, [currentNote]);
+        setEditorText(tempNoteText);
+    }, [tempNoteText]);
 
     // Update note when editor text changes
     const handleEditorChange = (text) => {
         setEditorText(text); // Update local editor state
-        updateNote(text);     // Call update function
+        setTempNoteText(text); 
     };
 
     return (
@@ -24,7 +24,7 @@ export default function Editor() {
                 className="quill"
                 theme="snow"
                 value={editorText}
-                onChange={handleEditorChange} // Use the new handler
+                onChange={handleEditorChange}
                 placeholder="Enter new notes"
             />
         </section>

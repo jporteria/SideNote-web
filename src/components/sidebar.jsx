@@ -7,11 +7,9 @@ export default function Sidebar() {
     useContext(NotesContext);
 
   const sortedNotes = notes.sort((a, b) => {
-    // Convert createdAt fields to timestamps if necessary
     const aCreatedAt = new Date(a.createdAt).getTime();
     const bCreatedAt = new Date(b.createdAt).getTime();
 
-    // Compare timestamps in descending order (newest first)
     return aCreatedAt - bCreatedAt;
   });
 
