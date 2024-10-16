@@ -11,16 +11,10 @@ export const NotesContext = createContext({});
 
 function App() {
   const [notes, setNotes] = useState([]);
-  // try {
-  //   const savedNotes = localStorage.getItem("notes");
-  //   return savedNotes ? JSON.parse(savedNotes) : [];
-  // } catch (error) {
-  //   console.error("Error parsing notes from localStorage:", error);
-  //   return []; // Return an empty array if there's an error
-  // }
-
   const [currentNoteId, setCurrentNoteId] = useState(notes[0]?.id || "");
   const [tempNoteText, setTempNoteText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
 
   const currentNote =
     notes.find((note) => note.id === currentNoteId) || notes[0];
@@ -49,10 +43,13 @@ function App() {
   }, [currentNote]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      updateNote(tempNoteText);
-    }, 1000);
-    return () => clearTimeout(timeoutId);
+    if (tempNoteText !== "" && !isDeleting) { // Check for value and not deleting
+      const timeoutId = setTimeout(() => {
+        updateNote(tempNoteText);
+      }, 1000);
+  
+      return () => clearTimeout(timeoutId);
+    }
   }, [tempNoteText]);
 
   async function createNewNote() {
@@ -63,6 +60,8 @@ function App() {
     };
     const newNoteRef = await addDoc(notesCollection, newNote);
     setCurrentNoteId(newNoteRef.id);
+
+    setTempNoteText(newNote.body);
   }
 
   async function updateNote(text) {
@@ -71,10 +70,11 @@ function App() {
       docRef,
       {
         body: text,
-        updatedAt: Date.now(), 
+        updatedAt: Date.now(),
       },
       { merge: true }
     );
+    console.log("update function was run", text, currentNote?.body);
   }
 
   // function deleteNote(event, noteId) {
@@ -83,8 +83,10 @@ function App() {
   // }
 
   async function deleteNote(noteId) {
+    setIsDeleting(true); // Set isDeleting to true before deleting
     const docRef = doc(db, "notes", noteId);
     await deleteDoc(docRef);
+    setIsDeleting(false); // Set isDeleting back to false after deletion
   }
 
   return (
