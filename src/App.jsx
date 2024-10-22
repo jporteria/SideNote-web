@@ -15,7 +15,6 @@ function App() {
   const [tempNoteText, setTempNoteText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
-
   const currentNote =
     notes.find((note) => note.id === currentNoteId) || notes[0];
 
@@ -43,11 +42,12 @@ function App() {
   }, [currentNote]);
 
   useEffect(() => {
-    if (tempNoteText !== "" && !isDeleting) { // Check for value and not deleting
+    if (tempNoteText !== "" && !isDeleting) {
+      // Check for value and not deleting
       const timeoutId = setTimeout(() => {
         updateNote(tempNoteText);
       }, 1000);
-  
+
       return () => clearTimeout(timeoutId);
     }
   }, [tempNoteText]);
@@ -104,8 +104,14 @@ function App() {
     >
       <main>
         {notes.length > 0 ? (
-          <Split sizes={[80, 20]} direction="horizontal" className="split">
-            {currentNoteId && notes.length > 0 && <Editor />}
+          <Split
+            sizes={[90, 10]}
+            direction="horizontal"
+            className="split"
+            gutterSize={3}
+            minSize={50}
+          >
+            <Editor />
             <Sidebar />
           </Split>
         ) : (

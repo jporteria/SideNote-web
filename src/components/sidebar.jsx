@@ -41,11 +41,11 @@ export default function Sidebar() {
   return (
     <section className="pane sidebar">
       <div className="sidebar--header">
-        <h3>Notes</h3>
+        <h3>N</h3>
       </div>
       {noteElements}
       <button className="new-note" onClick={createNewNote}>
-        Add new note
+        +
       </button>
     </section>
   );
