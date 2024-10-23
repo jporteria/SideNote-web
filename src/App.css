@@ -5,9 +5,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Karla', sans-serif;
+  font-family: "Karla", sans-serif;
 }
-main{
+main {
   width: 100vw;
 }
 
@@ -18,7 +18,7 @@ main{
   background-position: 50%;
 }
 .gutter.gutter-horizontal {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
 }
 
 .gutter.gutter-horizontal:hover {
@@ -35,7 +35,7 @@ main{
   width: 80%;
   height: 100vh;
 }
-.sidebar{
+.sidebar {
   width: 20%;
 }
 
@@ -44,7 +44,7 @@ main{
   /* padding: 10px; */
 }
 
-.quill{
+.quill {
   height: 100%;
 }
 
@@ -72,20 +72,26 @@ button:focus {
 .new-note {
   cursor: pointer;
   background-color: white;
-  border: 2px solid #4A4E74;
-  color: #4A4E74;
+  border: 2px solid #4a4e74;
+  color: #4a4e74;
   border-radius: 3px;
   height: 50px;
   width: 100%;
 }
 
-.first-note {
+button {
   cursor: pointer;
-  background-color: #4A4E74;
+  background-color: #4a4e74;
   border: none;
   color: white;
   border-radius: 3px;
   padding: 1rem;
+}
+input{
+  margin: 10px;
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
 }
 
 /* page when there is no notes */
@@ -101,7 +107,7 @@ button:focus {
 
 /* side bar tab style */
 .selected-note {
-  background-color: #4A4E74;
+  background-color: #4a4e74;
 }
 
 .text-snippet {
@@ -109,7 +115,7 @@ button:focus {
   font-size: 0.8rem;
   font-weight: 400;
   line-height: 1.2rem;
-  color: #4A4E74;
+  color: #4a4e74;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -130,11 +136,40 @@ button:focus {
 }
 
 /* delete notes button */
-.delete-button{
+.delete-button {
   background: none;
   border: none;
   display: none;
 }
-.title:hover > .delete-button{
+.title:hover > .delete-button {
   display: block;
+}
+
+.landingPage {
+  background-image: url("background.jpg");
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.authPage {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loginForm{
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NotesContext } from "../App";
+import { NotesContext } from "../Home";
 import DOMPurify from "dompurify";
 
 export default function Sidebar() {
