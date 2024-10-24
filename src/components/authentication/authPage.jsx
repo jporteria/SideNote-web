@@ -1,10 +1,9 @@
-import React from 'react'
-import Login from './login'
+import SignIn from './SignIn'
 
 function AuthPage() {
   return (
     <div className='authPage'>
-      <Login />
+      <SignIn />
     </div>
   )
 }

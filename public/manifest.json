@@ -1,19 +1,31 @@
 {
-    "manifest_version": 3,
-    "name": "SideNote",
-    "version": "1.0.0",
-    "description": "A simple note app",
-    "permissions": [
-        "sidePanel"
-    ],
-    "side_panel": {
-        "default_path": "index.html"
-    },
-    "background": {
-        "service_worker": "service_worker.js",
-        "type": "module"
-    },
-    "action": {
-        "default_title": "Click to open panel"
+  "manifest_version": 3,
+  "name": "SideNote",
+  "version": "1.0.0",
+  "description": "A simple note app",
+  "permissions": ["sidePanel", "storage"],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Click to open panel",
+    "default_popup": "index.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.html",
+        "*.js",
+        "*.css",
+        "*.jpg",
+        "*.png",
+        "images/*"
+      ],
+      "matches": ["<all_urls>"]
     }
+  ]
 }
