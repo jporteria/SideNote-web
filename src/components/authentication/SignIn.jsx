@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { signIn } from "../../firebase/authService";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate()
+
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const user = await signIn(email, password);
-      console.log("User signed in:", user);
+      await signIn(email, password);
+      navigate('/home')
+      // console.log("User signed in:", user.uid);
     } catch (error) {
       console.error("Error during sign-in:", error.message);
     }
   };
   return (
-    <div className="loginForm">
+    <div>
       <div>
         <form onSubmit={handleSignIn}>
           <h2>Login</h2>

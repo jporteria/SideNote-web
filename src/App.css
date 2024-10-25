@@ -167,7 +167,7 @@ input {
   justify-content: center;
   align-items: center;
 }
-.loginForm {
+.authForm {
   border: none;
   border-radius: 5px;
   box-shadow: 0 0 10px rgb(150, 150, 150);

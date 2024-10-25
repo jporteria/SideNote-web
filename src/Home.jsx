@@ -1,10 +1,10 @@
 import { useState, createContext, useEffect } from "react";
+import { getAuth } from "firebase/auth";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
-// import { nanoid } from "nanoid";
-import { onSnapshot, doc, addDoc, deleteDoc, setDoc } from "firebase/firestore";
-import { notesCollection, db } from "./firebase/firebase.js";
+import { onSnapshot, doc, addDoc, deleteDoc, setDoc, collection } from "firebase/firestore";
+import { db } from "./firebase/firebase.js";
 
 export const NotesContext = createContext({});
 
@@ -13,20 +13,28 @@ function Home() {
   const [currentNoteId, setCurrentNoteId] = useState(notes[0]?.id || "");
   const [tempNoteText, setTempNoteText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-  const currentNote =
-    notes.find((note) => note.id === currentNoteId) || notes[0];
+  const currentNote = notes.find((note) => note.id === currentNoteId) || notes[0];
 
+  // Ensure the user is logged in
   useEffect(() => {
-    const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
+    if (!user) return;
+
+    const userNotesCollection = collection(db, "users", user.uid, "notes");
+
+    // Subscribe to the user's notes collection
+    const unsubscribe = onSnapshot(userNotesCollection, (snapshot) => {
       const notesArr = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setNotes(notesArr);
     });
+
     return unsubscribe;
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (!currentNoteId) {
@@ -42,7 +50,6 @@ function Home() {
 
   useEffect(() => {
     if (tempNoteText !== "" && !isDeleting) {
-      // Check for value and not deleting
       const timeoutId = setTimeout(() => {
         updateNote(tempNoteText);
       }, 1000);
@@ -52,21 +59,26 @@ function Home() {
   }, [tempNoteText]);
 
   async function createNewNote() {
+    if (!user) return;
+
     const newNote = {
       body: "",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
-    const newNoteRef = await addDoc(notesCollection, newNote);
+    const userNotesCollection = collection(db, "users", user.uid, "notes");
+    const newNoteRef = await addDoc(userNotesCollection, newNote);
     setCurrentNoteId(newNoteRef.id);
 
     setTempNoteText(newNote.body);
   }
 
   async function updateNote(text) {
-    const docRef = doc(db, "notes", currentNoteId);
+    if (!user || !currentNoteId) return;
+
+    const noteRef = doc(db, "users", user.uid, "notes", currentNoteId);
     await setDoc(
-      docRef,
+      noteRef,
       {
         body: text,
         updatedAt: Date.now(),
@@ -76,16 +88,13 @@ function Home() {
     console.log("update function was run", text, currentNote?.body);
   }
 
-  // function deleteNote(event, noteId) {
-  //   event.stopPropagation();
-  //   setNotes((oldNotes) => oldNotes.filter((note) => note.id !== noteId));
-  // }
-
   async function deleteNote(noteId) {
-    setIsDeleting(true); // Set isDeleting to true before deleting
-    const docRef = doc(db, "notes", noteId);
-    await deleteDoc(docRef);
-    setIsDeleting(false); // Set isDeleting back to false after deletion
+    if (!user) return;
+
+    setIsDeleting(true);
+    const noteRef = doc(db, "users", user.uid, "notes", noteId);
+    await deleteDoc(noteRef);
+    setIsDeleting(false);
   }
 
   return (
