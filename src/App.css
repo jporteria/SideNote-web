@@ -1,3 +1,8 @@
+:root{
+  --primary-color: white;
+  --secondary-color: rgb(135, 54, 54);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -72,8 +77,8 @@ button:focus {
 .new-note {
   cursor: pointer;
   background-color: white;
-  border: 2px solid #4a4e74;
-  color: #4a4e74;
+  border: 2px solid var(--secondary-color);
+  color: var(--secondary-color);
   border-radius: 3px;
   height: 50px;
   width: 100%;
@@ -81,7 +86,7 @@ button:focus {
 
 button {
   cursor: pointer;
-  background-color: #4a4e74;
+  background-color: var(--secondary-color);
   border: none;
   color: white;
   border-radius: 3px;
@@ -107,7 +112,7 @@ input {
 
 /* side bar tab style */
 .selected-note {
-  background-color: #4a4e74;
+  background-color: var(--secondary-color);
 }
 
 .text-snippet {
@@ -115,7 +120,7 @@ input {
   font-size: 0.8rem;
   font-weight: 400;
   line-height: 1.2rem;
-  color: #4a4e74;
+  color: var(--secondary-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -175,6 +180,25 @@ input {
   flex-direction: column;
   padding: 10px;
 }
+.authButton{
+  width: 100%;
+  margin-bottom: 20px;
+}
+.authButton--inactive{
+  width: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+.authButton--active{
+  width: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-weight: bold;
+}
 .divider {
   display: flex;
   align-items: center;
@@ -200,7 +224,7 @@ input {
   color: #666;
 }
 
-form{
+form {
   display: flex;
   flex-direction: column;
 }

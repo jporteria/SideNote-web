@@ -22,7 +22,6 @@ const SignIn = () => {
     <div>
       <div>
         <form onSubmit={handleSignIn}>
-          <h2>Login</h2>
           <input
             type="email"
             value={email}
@@ -37,17 +36,8 @@ const SignIn = () => {
             placeholder="Password"
             required
           />
-          <button type="submit">Login</button>
+          <button type="submit">Log in</button>
         </form>
-      </div>
-      <div className="divider">
-        <span>or</span>
-      </div>
-      <div>
-        <button>
-          <img src="" alt="" />
-          Continue with Google
-        </button>
       </div>
     </div>
   );

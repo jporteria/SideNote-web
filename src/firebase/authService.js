@@ -1,6 +1,15 @@
 // authService.js
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { auth } from "./firebase";
+
+// Initialize Google provider
+const googleProvider = new GoogleAuthProvider();
 
 // Sign Up
 export const signUp = async (email, password) => {
@@ -20,6 +29,17 @@ export const signIn = async (email, password) => {
     return userCredential.user;
   } catch (error) {
     console.error("Error signing in:", error);
+    throw error;
+  }
+};
+
+// Google Sign In
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
     throw error;
   }
 };

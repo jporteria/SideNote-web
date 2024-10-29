@@ -1,10 +1,9 @@
 import { useState, createContext, useEffect } from "react";
-import { getAuth } from "firebase/auth";
+import { auth, db } from "./firebase/firebase.js";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
 import { onSnapshot, doc, addDoc, deleteDoc, setDoc, collection } from "firebase/firestore";
-import { db } from "./firebase/firebase.js";
 
 export const NotesContext = createContext({});
 
@@ -13,7 +12,6 @@ function Home() {
   const [currentNoteId, setCurrentNoteId] = useState(notes[0]?.id || "");
   const [tempNoteText, setTempNoteText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const auth = getAuth();
   const user = auth.currentUser;
 
   const currentNote = notes.find((note) => note.id === currentNoteId) || notes[0];

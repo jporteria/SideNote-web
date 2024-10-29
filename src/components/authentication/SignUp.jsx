@@ -9,7 +9,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       const user = await signUp(email, password);
-      console.log("User signed up:", user);
+        // console.log("User signed up:", user);
     } catch (error) {
       console.error("Error during sign-up:", error.message);
     }
