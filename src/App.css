@@ -141,7 +141,7 @@ input {
 }
 
 /* delete notes button */
-.delete-button {
+.delete--button {
   background: none;
   border: none;
   display: none;
@@ -151,7 +151,7 @@ input {
 }
 
 .landingPage {
-  background-image: url("background.jpg");
+  background-image: url("images/background.jpg");
   background-color: black;
   background-repeat: no-repeat;
   background-size: cover;
@@ -169,8 +169,14 @@ input {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background-image: url('images/background.jpg');
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: var(--primary-color);
 }
 .authForm {
   border: none;
@@ -179,6 +185,8 @@ input {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  background-color: var(--primary-color);
+  color: black;
 }
 .authButton{
   width: 100%;
@@ -227,4 +235,21 @@ input {
 form {
   display: flex;
   flex-direction: column;
+}
+
+.google--button{
+  width: 100%;
+  justify-content: center;
+  column-gap: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.register{
+  font-size: 14px;
+  margin: 10px 10px 0 10px;
+}
+.register > span{
+  text-decoration: underline;
+  cursor: pointer;
 }

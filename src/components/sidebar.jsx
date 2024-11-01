@@ -30,7 +30,7 @@ export default function Sidebar() {
           onClick={() => setCurrentNoteId(note.id)}
         >
           <h4 className="text-snippet">{firstLine}</h4>
-          <button className="delete-button" onClick={() => deleteNote(note.id)}>
+          <button className="delete--button" onClick={() => deleteNote(note.id)}>
             x
           </button>
         </div>

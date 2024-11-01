@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { signInWithGoogle } from "../../firebase/authService";
 import { useNavigate } from "react-router-dom";
+
+export const AuthContext = createContext({});
 
 function AuthPage() {
   const [form, setForm] = useState(true);
@@ -19,24 +21,36 @@ function AuthPage() {
   };
 
   return (
-    <div className="authPage">
-      <div className="authForm">
-        <div className="authButton">
-          <button className={form ? 'authButton--active' : 'authButton--inactive'} onClick={() => setForm(true)}>Log In</button>
-          <button className={form ? 'authButton--inactive' : 'authButton--active'} onClick={() => setForm(false)}>Sign up</button>
-        </div>
-        {form ? <SignIn /> : <SignUp />}
-        <div className="divider">
-          <span>or</span>
-        </div>
-        <div>
-          <button onClick={handleGoogleSignIn}>
-            <img src="" alt="" />
-            Continue with Google
-          </button>
+    <AuthContext.Provider value={{ form, setForm }}>
+      <div className="authPage">
+        <div className="authForm">
+          <div className="authButton">
+            <button
+              className={form ? "authButton--active" : "authButton--inactive"}
+              onClick={() => setForm(true)}
+            >
+              Log In
+            </button>
+            <button
+              className={form ? "authButton--inactive" : "authButton--active"}
+              onClick={() => setForm(false)}
+            >
+              Sign up
+            </button>
+          </div>
+          {form ? <SignIn /> : <SignUp />}
+          <div className="divider">
+            <span>or</span>
+          </div>
+          <div>
+            <button className="google--button" onClick={handleGoogleSignIn}>
+              <img src="/user.png" alt="" width="20px" />
+              Continue with Google
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </AuthContext.Provider>
   );
 }
 
