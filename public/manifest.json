@@ -3,11 +3,16 @@
   "name": "SideNote",
   "version": "1.0.0",
   "description": "A simple note app",
-  "permissions": ["sidePanel", "storage"],
-  "icons":{
-      "16": "images/note.png",
-      "32": "images/note.png",
-      "48": "images/note.png"
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "notifications" // Add for FCM
+  ],
+  "icons": {
+    "16": "images/note.png",
+    "32": "images/note.png",
+    "48": "images/note.png"
   },
   "background": {
     "service_worker": "service_worker.js",
@@ -34,6 +39,6 @@
     }
   ],
   "content_security_policy": {
-    "extension_pages": "default-src 'self'; img-src 'self' data:; connect-src 'self' https://identitytoolkit.googleapis.com https://your-google-api-endpoint.com;"
+    "extension_pages": "default-src 'self'; img-src 'self' data:; connect-src 'self' https://identitytoolkit.googleapis.com https://firestore.googleapis.com https://apis.google.com; script-src 'self'; script-src-elem 'self' https://apis.google.com; object-src 'none';"
   }
 }

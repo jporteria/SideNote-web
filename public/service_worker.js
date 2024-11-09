@@ -7,9 +7,9 @@ chrome.sidePanel
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.type === "API_REQUEST") {
     try {
-      // Make a direct fetch request to the desired Google API
+      // Replace with the actual endpoint
       const response = await fetch(
-        `https://your-google-api-endpoint?key=YOUR_API_KEY`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAepMX0OANiAVjAIgsM9MyRnHo_NSjodNE`,
         {
           method: "POST",
           headers: {
@@ -27,5 +27,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       sendResponse({ success: false, error: error.message });
     }
   }
+  // Ensure asynchronous sendResponse works
   return true;
 });

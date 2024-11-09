@@ -6,15 +6,15 @@ import { AuthContext } from "./authPage";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setForm } = useContext(AuthContext)
+  const { setForm } = useContext(AuthContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
       await signIn(email, password);
-      navigate('/home')
+      navigate("/home");
       // console.log("User signed in:", user.uid);
     } catch (error) {
       console.error("Error during sign-in:", error.message);
@@ -39,7 +39,10 @@ const SignIn = () => {
             required
           />
           <button type="submit">Log in</button>
-          <p className="register">Don't have an account? <span onClick={()=>setForm(false)}>Register</span></p>
+          <p className="register">
+            Don't have an account?{" "}
+            <span onClick={() => setForm(false)}>Register</span>
+          </p>
         </form>
       </div>
     </div>

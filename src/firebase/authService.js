@@ -14,7 +14,11 @@ const googleProvider = new GoogleAuthProvider();
 // Sign Up
 export const signUp = async (email, password) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredential.user;
   } catch (error) {
     console.error("Error signing up:", error);
@@ -25,7 +29,11 @@ export const signUp = async (email, password) => {
 // Sign In
 export const signIn = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredential.user;
   } catch (error) {
     console.error("Error signing in:", error);
@@ -36,6 +44,7 @@ export const signIn = async (email, password) => {
 // Google Sign In
 export const signInWithGoogle = async () => {
   try {
+    console.log('before the google pop up')
     const result = await signInWithPopup(auth, googleProvider);
     return result.user;
   } catch (error) {
