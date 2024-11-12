@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { NotesContext } from "../Home";
 import DOMPurify from "dompurify";
+import { logOut } from "../firebase/authService";
 
 export default function Sidebar() {
   const { notes, currentNote, setCurrentNoteId, createNewNote, deleteNote } =
@@ -30,7 +31,10 @@ export default function Sidebar() {
           onClick={() => setCurrentNoteId(note.id)}
         >
           <h4 className="text-snippet">{firstLine}</h4>
-          <button className="delete--button" onClick={() => deleteNote(note.id)}>
+          <button
+            className="delete--button"
+            onClick={() => deleteNote(note.id)}
+          >
             x
           </button>
         </div>
@@ -38,10 +42,16 @@ export default function Sidebar() {
     );
   });
 
+  const handleLogOut = async () => {
+    await logOut()
+    console.log('Successfully logged out')
+    window.location.href = '/auth'
+  }  
+
   return (
     <section className="pane sidebar">
-      <div className="sidebar--header">
-        <h3>N</h3>
+      <div className="sidebar--header" onClick={handleLogOut}>
+        <img src="/images/user.png" alt="user" width="20px" height="20px" />
       </div>
       {noteElements}
       <button className="new-note" onClick={createNewNote}>

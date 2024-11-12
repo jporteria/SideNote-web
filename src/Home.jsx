@@ -1,5 +1,7 @@
-import { useState, createContext, useEffect } from "react";
+import { useEffect, useState, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase/firebase.js";
+import { onAuthStateChanged } from "firebase/auth";  // Import the auth state change listener
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
@@ -12,11 +14,27 @@ function Home() {
   const [currentNoteId, setCurrentNoteId] = useState(notes[0]?.id || "");
   const [tempNoteText, setTempNoteText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const user = auth.currentUser;
+  const [user, setUser] = useState(null);  // Track the user state
+  const navigate = useNavigate();
 
-  const currentNote = notes.find((note) => note.id === currentNoteId) || notes[0];
+  // Check if token exists when Home component mounts
+  useEffect(() => {
+    chrome.storage.local.get(["authToken"], (result) => {
+      if (!result.authToken) {
+        navigate("/"); // Redirect to landing page if no token is found
+      }
+    });
+  }, [navigate]);
 
-  // Ensure the user is logged in
+  // Set up an auth listener to wait until user is authenticated
+  useEffect(() => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (authUser) => {
+      setUser(authUser);  // Set the user state after authentication state changes
+    });
+    return () => unsubscribeAuth();
+  }, []);
+
+  // Load notes only when the user is authenticated
   useEffect(() => {
     if (!user) return;
 
@@ -33,6 +51,8 @@ function Home() {
 
     return unsubscribe;
   }, [user]);
+
+  const currentNote = notes.find((note) => note.id === currentNoteId) || notes[0];
 
   useEffect(() => {
     if (!currentNoteId) {
@@ -67,7 +87,6 @@ function Home() {
     const userNotesCollection = collection(db, "users", user.uid, "notes");
     const newNoteRef = await addDoc(userNotesCollection, newNote);
     setCurrentNoteId(newNoteRef.id);
-
     setTempNoteText(newNote.body);
   }
 

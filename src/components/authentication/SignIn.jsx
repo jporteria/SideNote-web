@@ -16,6 +16,9 @@ const SignIn = () => {
       await signIn(email, password);
       navigate("/home");
       // console.log("User signed in:", user.uid);
+
+      // chrome.runtime.sendMessage({ action: "refreshSidePanel" });
+
     } catch (error) {
       console.error("Error during sign-in:", error.message);
     }
