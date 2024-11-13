@@ -3,12 +3,15 @@ chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error("Side panel error:", error));
 
+
+
+
 // Open new tab for authentication
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "openTab") {
-    chrome.tabs.create({ url: "http://localhost:5173/#/auth" }); // Update this URL if needed
-  }
-});
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+//   if (request.action === "openTab") {
+//     chrome.tabs.create({ url: "http://localhost:5173/#/auth" }); // Update this URL if needed
+//   }
+// });
 
 
 

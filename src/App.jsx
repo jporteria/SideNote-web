@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { HashRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
@@ -5,21 +6,19 @@ import LandingPage from "./components/landingPage";
 import AuthPage from "./components/authentication/authPage";
 
 function App() {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   // Check if the token exists in chrome.storage.local
-  //   chrome.storage.local.get(["authToken"], (result) => {
-  //     if (result.authToken) {
-  //       setIsAuthenticated(true);
-  //       navigate("/home");
-  //     } else {
-  //       setIsAuthenticated(false);
-  //       navigate("/");
-  //     }
-  //   });
-  // }, [navigate]);
+  useEffect(() => {
+    // Try fetching the token here without wrapping it in any other logic
+    chrome.storage.local.get(["authToken"], (result) => {
+      if (result.authToken) {
+        navigate("/home");
+      } else {
+        navigate("/");
+      }
+      // console.log(result.authToken)
+    });
+  }, []);
 
   return (
     <Router>

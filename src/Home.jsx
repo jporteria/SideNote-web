@@ -1,11 +1,19 @@
 import { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase/firebase.js";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
+// import { getTokenFromStorage, authenticateWithToken } from "./firebase/authService.js";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
-import { onSnapshot, doc, addDoc, deleteDoc, setDoc, collection } from "firebase/firestore";
+import {
+  onSnapshot,
+  doc,
+  addDoc,
+  deleteDoc,
+  setDoc,
+  collection,
+} from "firebase/firestore";
 
 export const NotesContext = createContext({});
 
@@ -17,15 +25,50 @@ function Home() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+   const getTokenFromStorage = () => {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(["authToken"], (result) => {
+        if (result.authToken) {
+          resolve(result.authToken);
+        } else {
+          reject("No token found");
+        }
+      });
+    });
+  };
+  
+  // Authenticate with token
+   const authenticateWithToken = async (token) => {
+    try {
+      await signInWithCustomToken(auth, token);
+      console.log("Authenticated with stored token");
+    } catch (error) {
+      console.error("Error authenticating with token:", error);
+    }
+  };
+
+
   // Redirect if not authenticated
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         setUser(authUser);
+        console.log('user is logged in', authUser)
       } else {
         navigate("/");
+        console.log('user is logged out')
       }
     });
+
+    // Check if token is available when the component mounts
+    getTokenFromStorage()
+      .then((token) => {
+        authenticateWithToken(token); // Authenticate the user with the token
+      })
+      .catch(() => {
+        navigate("/"); // Redirect if no token is found
+      });
+
     return () => unsubscribeAuth();
   }, [navigate]);
 
@@ -46,7 +89,8 @@ function Home() {
     return unsubscribe;
   }, [user]);
 
-  const currentNote = notes.find((note) => note.id === currentNoteId) || notes[0];
+  const currentNote =
+    notes.find((note) => note.id === currentNoteId) || notes[0];
 
   useEffect(() => {
     if (!currentNoteId) {
