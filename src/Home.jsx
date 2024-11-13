@@ -1,7 +1,7 @@
 import { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase/firebase.js";
-import { onAuthStateChanged } from "firebase/auth";  // Import the auth state change listener
+import { onAuthStateChanged } from "firebase/auth";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
@@ -14,33 +14,27 @@ function Home() {
   const [currentNoteId, setCurrentNoteId] = useState(notes[0]?.id || "");
   const [tempNoteText, setTempNoteText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [user, setUser] = useState(null);  // Track the user state
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Check if token exists when Home component mounts
-  useEffect(() => {
-    chrome.storage.local.get(["authToken"], (result) => {
-      if (!result.authToken) {
-        navigate("/"); // Redirect to landing page if no token is found
-      }
-    });
-  }, [navigate]);
-
-  // Set up an auth listener to wait until user is authenticated
+  // Redirect if not authenticated
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (authUser) => {
-      setUser(authUser);  // Set the user state after authentication state changes
+      if (authUser) {
+        setUser(authUser);
+      } else {
+        navigate("/");
+      }
     });
     return () => unsubscribeAuth();
-  }, []);
+  }, [navigate]);
 
-  // Load notes only when the user is authenticated
+  // Load notes when user is authenticated
   useEffect(() => {
     if (!user) return;
 
     const userNotesCollection = collection(db, "users", user.uid, "notes");
 
-    // Subscribe to the user's notes collection
     const unsubscribe = onSnapshot(userNotesCollection, (snapshot) => {
       const notesArr = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -102,7 +96,6 @@ function Home() {
       },
       { merge: true }
     );
-    console.log("update function was run", text, currentNote?.body);
   }
 
   async function deleteNote(noteId) {
