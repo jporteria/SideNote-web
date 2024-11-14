@@ -5,7 +5,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
-  signInWithCustomToken
 } from "firebase/auth";
 import { auth } from "./firebase";
 
@@ -40,9 +39,13 @@ export const signIn = async (email, password) => {
 
 // Google Sign In
 export const signInWithGoogle = async () => {
-  const result = await signInWithPopup(auth, googleProvider);
-  const token = await getIdTokenAndStore();
-  return { user: result.user, token };
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
+  } catch (error) {
+    console.error("Error during Google sign-in:", error);
+    throw error;
+  }
 };
 
 // Sign Out

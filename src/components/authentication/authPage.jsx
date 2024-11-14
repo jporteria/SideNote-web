@@ -20,6 +20,24 @@ function AuthPage() {
     }
   };
 
+  window.handleGoogleSignIn = handleGoogleSignIn;
+
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   const signInButton = document.getElementById("signInButton");
+  //   if (signInButton) {
+  //     signInButton.addEventListener("click", async () => {
+  //       try {
+  //         const user = await signInWithGoogle();
+  //         console.log("User signed in from extension:", user);
+  //       } catch (error) {
+  //         console.error("Sign-in error in extension:", error);
+  //       }
+  //     });
+  //   } else {
+  //     console.error("Sign-in button not found in the DOM");
+  //   }
+  // });
+
   return (
     <AuthContext.Provider value={{ form, setForm }}>
       <div className="authPage">
@@ -43,7 +61,11 @@ function AuthPage() {
             <span>or</span>
           </div>
           <div>
-            <button className="google--button" onClick={handleGoogleSignIn}>
+            <button
+              className="google--button"
+              id="signInButton"
+              onClick={handleGoogleSignIn}
+            >
               <img src="/user.png" alt="" width="20px" />
               Continue with Google
             </button>

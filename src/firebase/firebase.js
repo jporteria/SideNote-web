@@ -7,10 +7,10 @@ const firebaseConfig = {
   apiKey: "AIzaSyAepMX0OANiAVjAIgsM9MyRnHo_NSjodNE",
   authDomain: "sidenote-d6c88.firebaseapp.com",
   projectId: "sidenote-d6c88",
-  storageBucket: "sidenote-d6c88.appspot.com",
+  storageBucket: "sidenote-d6c88.firebasestorage.app",
   messagingSenderId: "327144965832",
   appId: "1:327144965832:web:4bf9631e40d13055a487fd",
-  measurementId: "G-8V0YNKKZH5",
+  measurementId: "G-8V0YNKKZH5"
 };
 
 // Initialize Firebase
