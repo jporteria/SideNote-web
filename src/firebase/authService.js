@@ -60,4 +60,3 @@ export const logOut = async () => {
 export const onAuthStateChange = (callback) => {
   onAuthStateChanged(auth, callback);
 };
-

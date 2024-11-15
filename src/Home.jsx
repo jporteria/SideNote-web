@@ -5,6 +5,7 @@ import { onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
 // import { getTokenFromStorage, authenticateWithToken } from "./firebase/authService.js";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
+import Profile from "./components/profile";
 import Split from "react-split";
 import {
   onSnapshot,
@@ -165,6 +166,7 @@ function Home() {
       }}
     >
       <main>
+        <Profile />
         {notes.length > 0 ? (
           <Split
             sizes={[90, 10]}

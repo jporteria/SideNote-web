@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { signInWithGoogle } from "../../firebase/authService";
@@ -10,33 +10,44 @@ function AuthPage() {
   const [form, setForm] = useState(true);
   const navigate = useNavigate();
 
-  const handleGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-      navigate("/home");
-      // console.log("User signed in with Google:", user);
-    } catch (error) {
-      console.error("Error during Google sign-in:", error.message);
-    }
-  };
-
-  window.handleGoogleSignIn = handleGoogleSignIn;
-
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   const signInButton = document.getElementById("signInButton");
-  //   if (signInButton) {
-  //     signInButton.addEventListener("click", async () => {
-  //       try {
-  //         const user = await signInWithGoogle();
-  //         console.log("User signed in from extension:", user);
-  //       } catch (error) {
-  //         console.error("Sign-in error in extension:", error);
-  //       }
-  //     });
-  //   } else {
-  //     console.error("Sign-in button not found in the DOM");
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     await signInWithGoogle();
+  //     navigate("/home");
+  //     // console.log("User signed in with Google:", user);
+  //   } catch (error) {
+  //     console.error("Error during Google sign-in:", error.message);
   //   }
-  // });
+  // };
+
+  // window.handleGoogleSignIn = handleGoogleSignIn;
+  
+  useEffect(() => {
+    const signInButton = document.getElementById("signInButton");
+
+    if (signInButton) {
+      const handleClick = async () => {
+        try {
+          const user = await signInWithGoogle();
+          console.log("User signed in from extension:", user);
+          navigate("/home"); // Navigate to the home page after sign-in
+        } catch (error) {
+          console.error("Sign-in error in extension:", error);
+        }
+      };
+
+      // Add the event listener
+      signInButton.addEventListener("click", handleClick);
+
+      // Cleanup the event listener on component unmount
+      return () => {
+        signInButton.removeEventListener("click", handleClick);
+      };
+    } else {
+      console.error("Sign-in button not found in the DOM");
+    }
+  }, [navigate]);
+
 
   return (
     <AuthContext.Provider value={{ form, setForm }}>
@@ -64,7 +75,7 @@ function AuthPage() {
             <button
               className="google--button"
               id="signInButton"
-              onClick={handleGoogleSignIn}
+              // onClick={handleGoogleSignIn}
             >
               <img src="/user.png" alt="" width="20px" />
               Continue with Google
