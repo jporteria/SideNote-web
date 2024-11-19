@@ -43,20 +43,28 @@ export default function Sidebar() {
   });
 
   const handleLogOut = async () => {
-    await logOut()
-    console.log('Successfully logged out')
+    await logOut();
+    console.log("Successfully logged out");
     // window.location.href = 'http://localhost:5173/#/auth'
-  }  
+  };
 
   return (
     <section className="pane sidebar">
-      <div className="sidebar--header" onClick={handleLogOut}>
-        <img src="/images/user.png" alt="user" width="20px" height="20px" />
+      <div>
+        {noteElements}
+        <button className="new-note" onClick={createNewNote}>
+          +
+        </button>
       </div>
-      {noteElements}
-      <button className="new-note" onClick={createNewNote}>
-        +
-      </button>
+      <div className="sidebar--header" onClick={handleLogOut}>
+        <img
+          className="Signout"
+          src="/images/logout.png"
+          alt="user"
+          width="25px"
+          height="25px"
+        />
+      </div>
     </section>
   );
 }

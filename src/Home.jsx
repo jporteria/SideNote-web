@@ -166,7 +166,7 @@ function Home() {
       }}
     >
       <main>
-        <Profile />
+        {/* <Profile /> */}
         {notes.length > 0 ? (
           <Split
             sizes={[90, 10]}

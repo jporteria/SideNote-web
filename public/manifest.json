@@ -10,9 +10,9 @@
     "tabs"
   ],
   "icons": {
-    "16": "images/note.png",
-    "32": "images/note.png",
-    "48": "images/note.png"
+    "16": "images/notes.png",
+    "32": "images/notes.png",
+    "48": "images/notes.png"
   },
   "background": {
     "service_worker": "service_worker.js",

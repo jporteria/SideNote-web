@@ -1,4 +1,4 @@
-:root{
+:root {
   --primary-color: white;
   --secondary-color: rgb(45, 45, 145);
 }
@@ -42,10 +42,14 @@ main {
 }
 .sidebar {
   width: 20%;
+  margin-top: 50px;
 }
 
 .pane {
   overflow-y: hidden;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
   /* padding: 10px; */
 }
 
@@ -63,7 +67,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70px;
+  margin-bottom: 20px;
 }
 
 /* button styles */
@@ -171,7 +175,7 @@ input {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('/images/background.jpg');
+  background-image: url("/images/background.jpg");
   background-color: white;
   background-repeat: no-repeat;
   background-size: cover;
@@ -188,18 +192,18 @@ input {
   background-color: var(--primary-color);
   color: black;
 }
-.authButton{
+.authButton {
   width: 100%;
   margin-bottom: 20px;
 }
-.authButton--inactive{
+.authButton--inactive {
   width: 50%;
   padding: 10px;
   border-radius: 15px;
   background-color: var(--primary-color);
   color: var(--secondary-color);
 }
-.authButton--active{
+.authButton--active {
   width: 50%;
   padding: 10px;
   border-radius: 15px;
@@ -237,7 +241,7 @@ form {
   flex-direction: column;
 }
 
-.google--button{
+.google--button {
   width: 100%;
   justify-content: center;
   column-gap: 10px;
@@ -245,19 +249,42 @@ form {
   display: flex;
 }
 
-.register{
+.register {
   font-size: 14px;
   margin: 10px 10px 0 10px;
 }
-.register > span{
+.register > span {
   text-decoration: underline;
   cursor: pointer;
 }
 
-.profile--box{
-  height: 200px;
-  width: 200px;
+.profile--box {
+  height: auto;
+  width: auto;
   border: 1px solid red;
   z-index: 1;
   position: fixed;
+  top: 50px;
+  right: 50px;
+  box-shadow: 0 0 10px rgb(150, 150, 150);
+  background-color: var(--primary-color);
+}
+.profile--box > div {
+  cursor: pointer;
+  margin: 5px;
+}
+.profile--box > div:hover {
+  transform: scale(1.05);
+}
+.ql-toolbar.ql-snow {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  padding: 0 !important;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+.ql-toolbar.ql-snow .ql-formats {
+  margin-right: 0 !important;
 }

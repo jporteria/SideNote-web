@@ -2,7 +2,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
@@ -23,32 +24,50 @@ const getIdTokenAndStore = async () => {
   return null;
 };
 
-// Sign Up
-export const signUp = async (email, password) => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  const token = await getIdTokenAndStore();
-  return { user: userCredential.user, token };
-};
-
-// Sign In
-export const signIn = async (email, password) => {
-  const userCredential = await signInWithEmailAndPassword(auth, email, password);
-  const token = await getIdTokenAndStore();
-  return { user: userCredential.user, token };
-};
-
-// Google Sign In
+// Google Sign In using Redirect
 export const signInWithGoogle = async () => {
+  console.log("sign in with google called");
   try {
-    const result = await signInWithPopup(auth, googleProvider);
-    return result.user;
+    await signInWithRedirect(auth, googleProvider);
   } catch (error) {
     console.error("Error during Google sign-in:", error);
     throw error;
   }
 };
 
-// Sign Out
+// Handle redirect result
+export const handleRedirectResult = async () => {
+  console.log("Checking redirect result...");
+  try {
+    const result = await getRedirectResult(auth);
+    if (result) {
+      const user = result.user;
+      console.log("User signed in via redirect:", user);
+      await getIdTokenAndStore(); // Store the token
+      return user;
+    }
+    console.log("No redirect result found");
+    return null;
+  } catch (error) {
+    console.error("Error handling redirect result:", error);
+    throw error;
+  }
+};
+
+// Other functions remain the same...
+
+export const signUp = async (email, password) => {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const token = await getIdTokenAndStore();
+  return { user: userCredential.user, token };
+};
+
+export const signIn = async (email, password) => {
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  const token = await getIdTokenAndStore();
+  return { user: userCredential.user, token };
+};
+
 export const logOut = async () => {
   await signOut(auth);
   chrome.storage.local.remove("authToken", () => {
@@ -56,7 +75,6 @@ export const logOut = async () => {
   });
 };
 
-// Auth Listener
 export const onAuthStateChange = (callback) => {
   onAuthStateChanged(auth, callback);
 };

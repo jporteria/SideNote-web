@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { signInWithGoogle } from "../../firebase/authService";
+import { handleRedirectResult } from "../../firebase/authService"; // Remove `signInWithGoogle` import
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext({});
@@ -10,44 +10,39 @@ function AuthPage() {
   const [form, setForm] = useState(true);
   const navigate = useNavigate();
 
-  // const handleGoogleSignIn = async () => {
-  //   try {
-  //     await signInWithGoogle();
-  //     navigate("/home");
-  //     // console.log("User signed in with Google:", user);
-  //   } catch (error) {
-  //     console.error("Error during Google sign-in:", error.message);
-  //   }
-  // };
-
-  // window.handleGoogleSignIn = handleGoogleSignIn;
-  
   useEffect(() => {
-    const signInButton = document.getElementById("signInButton");
-
-    if (signInButton) {
-      const handleClick = async () => {
-        try {
-          const user = await signInWithGoogle();
-          console.log("User signed in from extension:", user);
-          navigate("/home"); // Navigate to the home page after sign-in
-        } catch (error) {
-          console.error("Sign-in error in extension:", error);
+    // Check if there is a redirect result
+    const checkRedirectResult = async () => {
+      try {
+        const user = await handleRedirectResult();
+        if (user) {
+          console.log("User signed in via redirect:", user);
+          navigate("/home"); // Redirect to home page after successful sign-in
         }
-      };
-
-      // Add the event listener
-      signInButton.addEventListener("click", handleClick);
-
-      // Cleanup the event listener on component unmount
-      return () => {
-        signInButton.removeEventListener("click", handleClick);
-      };
-    } else {
-      console.error("Sign-in button not found in the DOM");
-    }
+      } catch (error) {
+        console.error("Error handling redirect result:", error);
+      }
+    };
+    checkRedirectResult();
   }, [navigate]);
 
+  const handleGoogleSignIn = () => {
+    event.preventDefault();
+    // Send a message to the service worker to open a new tab
+    chrome.runtime.sendMessage(
+      { action: "OPEN_GOOGLE_SIGN_IN_TAB" },
+      (response) => {
+        if (chrome.runtime.lastError) {
+          console.error(
+            "Error sending message to service worker:",
+            chrome.runtime.lastError.message
+          );
+        } else {
+          console.log("Message sent to service worker:", response);
+        }
+      }
+    );
+  };
 
   return (
     <AuthContext.Provider value={{ form, setForm }}>
@@ -72,11 +67,7 @@ function AuthPage() {
             <span>or</span>
           </div>
           <div>
-            <button
-              className="google--button"
-              id="signInButton"
-              // onClick={handleGoogleSignIn}
-            >
+            <button className="google--button" onClick={handleGoogleSignIn}>
               <img src="/user.png" alt="" width="20px" />
               Continue with Google
             </button>

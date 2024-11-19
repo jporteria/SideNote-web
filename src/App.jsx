@@ -4,20 +4,25 @@ import "./App.css";
 import Home from "./Home";
 import LandingPage from "./components/landingPage";
 import AuthPage from "./components/authentication/authPage";
+import GoogleSignInPage from "./components/google-signin";
 
 function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Try fetching the token here without wrapping it in any other logic
-    chrome.storage.local.get(["authToken"], (result) => {
-      if (result.authToken) {
-        navigate("/home");
-      } else {
-        navigate("/");
-      }
-      // console.log(result.authToken)
-    });
+    try{
+
+      chrome.storage.local.get(["authToken"], (result) => {
+        if (result.authToken) {
+          navigate("/home");
+        } else {
+          navigate("/");
+        }
+        // console.log(result.authToken)
+      });
+    }catch(err){
+      console.log(err)
+    }
   }, []);
 
   return (
@@ -25,6 +30,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/google-signin" element={<GoogleSignInPage />} />
       </Routes>
   );
 }
