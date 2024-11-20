@@ -7,18 +7,24 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const { setForm } = useContext(AuthContext);
 
+  const errorMessage = document.getElementById("error-message");
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const user = await signUp(email, password);
-      // console.log("User signed up:", user);
+      await signUp(email, password);
+      setForm(true);
     } catch (error) {
-      console.error("Error during sign-up:", error.message);
+      errorMessage.textContent = error.code;
+      setTimeout(() => {
+        errorMessage.textContent = "";
+      }, 3000);
     }
   };
 
   return (
     <form onSubmit={handleSignUp}>
+      <label id="error-message"></label>
       <input
         type="email"
         value={email}

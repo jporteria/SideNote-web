@@ -9,24 +9,25 @@ const SignIn = () => {
   const { setForm } = useContext(AuthContext);
 
   const navigate = useNavigate();
+  const errorMessage = document.getElementById("error-message");
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
       await signIn(email, password);
       navigate("/home");
-      // console.log("User signed in:", user.uid);
-
-      // chrome.runtime.sendMessage({ action: "refreshSidePanel" });
-
     } catch (error) {
-      console.error("Error during sign-in:", error.message);
+      errorMessage.textContent = error.code;
+      setTimeout(() => {
+        errorMessage.textContent = "";
+      }, 3000);
     }
   };
   return (
     <div>
       <div>
         <form onSubmit={handleSignIn}>
+          <label id="error-message"></label>
           <input
             type="email"
             value={email}

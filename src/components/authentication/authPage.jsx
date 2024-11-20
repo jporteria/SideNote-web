@@ -1,14 +1,14 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 // import { handleRedirectResult, signInWithGoogle } from "../../firebase/authService"; // Remove `signInWithGoogle` import
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext({});
 
 function AuthPage() {
   const [form, setForm] = useState(true);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // useEffect(() => {
   //   // Check if there is a redirect result

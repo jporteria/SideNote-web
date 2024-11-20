@@ -44,7 +44,7 @@ export default function Sidebar() {
 
   const handleLogOut = async () => {
     await logOut();
-    console.log("Successfully logged out");
+    // console.log("Successfully logged out");
     // window.location.href = 'http://localhost:5173/#/auth'
   };
 
