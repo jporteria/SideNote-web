@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { handleRedirectResult } from "../../firebase/authService"; // Remove `signInWithGoogle` import
+// import { handleRedirectResult, signInWithGoogle } from "../../firebase/authService"; // Remove `signInWithGoogle` import
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext({});
@@ -10,39 +10,39 @@ function AuthPage() {
   const [form, setForm] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if there is a redirect result
-    const checkRedirectResult = async () => {
-      try {
-        const user = await handleRedirectResult();
-        if (user) {
-          console.log("User signed in via redirect:", user);
-          navigate("/home"); // Redirect to home page after successful sign-in
-        }
-      } catch (error) {
-        console.error("Error handling redirect result:", error);
-      }
-    };
-    checkRedirectResult();
-  }, [navigate]);
+  // useEffect(() => {
+  //   // Check if there is a redirect result
+  //   const checkRedirectResult = async () => {
+  //     try {
+  //       const user = await handleRedirectResult();
+  //       if (user) {
+  //         console.log("User signed in via redirect:", user);
+  //         navigate("/home"); // Redirect to home page after successful sign-in
+  //       }
+  //     } catch (error) {
+  //       console.error("Error handling redirect result:", error);
+  //     }
+  //   };
+  //   checkRedirectResult();
+  // }, [navigate]);
 
-  const handleGoogleSignIn = () => {
-    event.preventDefault();
-    // Send a message to the service worker to open a new tab
-    chrome.runtime.sendMessage(
-      { action: "OPEN_GOOGLE_SIGN_IN_TAB" },
-      (response) => {
-        if (chrome.runtime.lastError) {
-          console.error(
-            "Error sending message to service worker:",
-            chrome.runtime.lastError.message
-          );
-        } else {
-          console.log("Message sent to service worker:", response);
-        }
-      }
-    );
-  };
+  // const handleGoogleSignIn = () => {
+  //   event.preventDefault();
+  //   // Send a message to the service worker to open a new tab
+  //   chrome.runtime.sendMessage(
+  //     { action: "OPEN_GOOGLE_SIGN_IN_TAB" },
+  //     (response) => {
+  //       if (chrome.runtime.lastError) {
+  //         console.error(
+  //           "Error sending message to service worker:",
+  //           chrome.runtime.lastError.message
+  //         );
+  //       } else {
+  //         console.log("Message sent to service worker:", response);
+  //       }
+  //     }
+  //   );
+  // };
 
   return (
     <AuthContext.Provider value={{ form, setForm }}>
@@ -67,8 +67,8 @@ function AuthPage() {
             <span>or</span>
           </div>
           <div>
-            <button className="google--button" onClick={handleGoogleSignIn}>
-              <img src="/user.png" alt="" width="20px" />
+            <button className="google--button" onClick={''} disabled>
+              <img src="/images/google.png" alt="" width="20px" />
               Continue with Google
             </button>
           </div>

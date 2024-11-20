@@ -93,6 +93,12 @@ button {
   border-radius: 3px;
   padding: 1rem;
 }
+
+button:disabled {
+  cursor: not-allowed;   /* Show not-allowed cursor */
+  opacity: 0.6;          /* Make the button look less prominent */
+}
+
 input {
   margin: 10px;
   border: none;

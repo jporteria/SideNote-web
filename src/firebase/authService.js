@@ -2,14 +2,15 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  signInWithRedirect,
-  getRedirectResult,
-  GoogleAuthProvider,
+  // signInWithRedirect,
+  // getRedirectResult,
+  // GoogleAuthProvider,
   onAuthStateChanged,
+  // signInWithPopup,
 } from "firebase/auth";
 import { auth } from "./firebase";
 
-const googleProvider = new GoogleAuthProvider();
+// const googleProvider = new GoogleAuthProvider();
 
 // Helper to get and store the current ID token
 const getIdTokenAndStore = async () => {
@@ -25,34 +26,34 @@ const getIdTokenAndStore = async () => {
 };
 
 // Google Sign In using Redirect
-export const signInWithGoogle = async () => {
-  console.log("sign in with google called");
-  try {
-    await signInWithRedirect(auth, googleProvider);
-  } catch (error) {
-    console.error("Error during Google sign-in:", error);
-    throw error;
-  }
-};
+// export const signInWithGoogle = async () => {
+//   console.log("sign in with google called");
+//   try {
+//     await signInWithPopup(auth, googleProvider);
+//   } catch (error) {
+//     console.error("Error during Google sign-in:", error);
+//     throw error;
+//   }
+// };
 
 // Handle redirect result
-export const handleRedirectResult = async () => {
-  console.log("Checking redirect result...");
-  try {
-    const result = await getRedirectResult(auth);
-    if (result) {
-      const user = result.user;
-      console.log("User signed in via redirect:", user);
-      await getIdTokenAndStore(); // Store the token
-      return user;
-    }
-    console.log("No redirect result found");
-    return null;
-  } catch (error) {
-    console.error("Error handling redirect result:", error);
-    throw error;
-  }
-};
+// export const handleRedirectResult = async () => {
+//   console.log("Checking redirect result...");
+//   try {
+//     const result = await getRedirectResult(auth);
+//     if (result) {
+//       const user = result.user;
+//       console.log("User signed in via redirect:", user);
+//       await getIdTokenAndStore(); // Store the token
+//       return user;
+//     }
+//     console.log("No redirect result found");
+//     return null;
+//   } catch (error) {
+//     console.error("Error handling redirect result:", error);
+//     throw error;
+//   }
+// };
 
 // Other functions remain the same...
 
