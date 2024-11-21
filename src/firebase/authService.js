@@ -18,7 +18,7 @@ const getIdTokenAndStore = async () => {
   if (currentUser) {
     const token = await currentUser.getIdToken(true); // Get a fresh token
     chrome.storage.local.set({ authToken: token }, () => {
-      console.log("Token saved to chrome.storage.local", token);
+      // console.log("Token saved to chrome.storage.local", token);
     });
     return token;
   }
@@ -72,7 +72,7 @@ export const signIn = async (email, password) => {
 export const logOut = async () => {
   await signOut(auth);
   chrome.storage.local.remove("authToken", () => {
-    console.log("Token removed from chrome.storage.local");
+    // console.log("Token removed from chrome.storage.local");
   });
 };
 

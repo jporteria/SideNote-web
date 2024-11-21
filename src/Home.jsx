@@ -5,7 +5,7 @@ import { onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
 // import { getTokenFromStorage, authenticateWithToken } from "./firebase/authService.js";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
-import Profile from "./components/profile";
+// import Profile from "./components/profile";
 import Split from "react-split";
 import {
   onSnapshot,
@@ -42,9 +42,9 @@ function Home() {
    const authenticateWithToken = async (token) => {
     try {
       await signInWithCustomToken(auth, token);
-      console.log("Authenticated with stored token");
+      // console.log("Authenticated with stored token");
     } catch (error) {
-      console.error("Error authenticating with token:", error);
+      // console.error(error);
     }
   };
 
@@ -54,10 +54,10 @@ function Home() {
     const unsubscribeAuth = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         setUser(authUser);
-        console.log('user is logged in', authUser)
+        // console.log('user is logged in', authUser)
       } else {
-        navigate("/");
-        console.log('user is logged out')
+        navigate("/auth");
+        // console.log('user is logged out')
       }
     });
 
@@ -67,7 +67,7 @@ function Home() {
         authenticateWithToken(token); // Authenticate the user with the token
       })
       .catch(() => {
-        navigate("/"); // Redirect if no token is found
+        navigate("/auth"); // Redirect if no token is found
       });
 
     return () => unsubscribeAuth();

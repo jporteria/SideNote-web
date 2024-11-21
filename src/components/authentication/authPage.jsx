@@ -67,7 +67,7 @@ function AuthPage() {
             <span>or</span>
           </div>
           <div>
-            <button className="google--button" onClick={''} disabled>
+            <button className="google--button" disabled>
               <img src="/images/google.png" alt="" width="20px" />
               Continue with Google
             </button>
