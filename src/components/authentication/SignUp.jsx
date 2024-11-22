@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { signUp } from "../../firebase/authService";
-import { AuthContext } from "./authPage";
+import { AuthContext } from "./authForm";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -8,12 +9,13 @@ const SignUp = () => {
   const { setForm } = useContext(AuthContext);
 
   const errorMessage = document.getElementById("error-message");
+  const navigate = useNavigate()
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       await signUp(email, password);
-      setForm(true);
+      navigate("/auth/verifyEmail");
     } catch (error) {
       errorMessage.textContent = error.code;
       setTimeout(() => {

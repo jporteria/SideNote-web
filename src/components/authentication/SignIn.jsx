@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { signIn } from "../../firebase/authService";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "./authPage";
+import { AuthContext } from "./authForm";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");

@@ -268,7 +268,18 @@ form {
   text-decoration: underline;
   cursor: pointer;
 }
-
+.verifyEmailForm {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgb(150, 150, 150);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: black;
+  height: 100px;
+  width: 100px;
+}
 .profile--box {
   height: auto;
   width: auto;
