@@ -42,6 +42,12 @@ const SignIn = () => {
             placeholder="Password"
             required
           />
+          <p
+            className="forgot-password"
+            onClick={() => navigate("/auth/passwordReset")}
+          >
+            Forgot password?
+          </p>
           <button type="submit">Log in</button>
           <p className="register">
             Don't have an account?{" "}

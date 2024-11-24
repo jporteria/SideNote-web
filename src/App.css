@@ -197,6 +197,7 @@ input {
   padding: 10px;
   background-color: var(--primary-color);
   color: black;
+  width: 250px;
 }
 .authButton {
   width: 100%;
@@ -259,10 +260,16 @@ form {
   align-items: center;
   display: flex;
 }
-
+.forgot-password{
+  font-size: 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  text-decoration: underline;
+}
 .register {
-  font-size: 14px;
+  font-size: 12px;
   margin: 10px 10px 0 10px;
+  text-align: center;
 }
 .register > span {
   text-decoration: underline;
@@ -280,6 +287,18 @@ form {
   height: auto;
   width: 250px;
   align-items: center;
+}
+.passwordResetForm{
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgb(150, 150, 150);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: black;
+  height: 250;
+  width: 250px;
 }
 h2{
   margin-bottom: 0;

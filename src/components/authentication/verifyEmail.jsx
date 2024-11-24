@@ -48,7 +48,7 @@ function VerifyEmail() {
     <div className="verifyEmailForm">
       <h2>Verify your email address</h2>
       <p className="verify-note">
-        Note: you cannot reset your password if your email is not verified
+        Note: you cannot reset your password if your email is not verified. You can verify you email later in the settings
       </p>
       <label style={{ color: messageColor }}>{verificationMessage}</label>
       <button className="verify-button" onClick={sendVerificationEmail}>
