@@ -61,9 +61,6 @@ const getIdTokenAndStore = async () => {
 export const signUp = async (email, password) => {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const token = await getIdTokenAndStore();
-
-  await sendEmailVerification(userCredential.user)
-
   return { user: userCredential.user, token };
 };
 
