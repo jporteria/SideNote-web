@@ -17,7 +17,9 @@ const SignUp = () => {
       await signUp(email, password);
       navigate("/auth/verifyEmail");
     } catch (error) {
-      errorMessage.textContent = error.code;
+      const errorCode = error.code || "unknown-error";
+      const formattedError = errorCode.split("/")[1] || errorCode;
+      errorMessage.textContent = formattedError;
       setTimeout(() => {
         errorMessage.textContent = "";
       }, 3000);

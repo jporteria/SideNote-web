@@ -265,6 +265,7 @@ form {
   margin-left: 10px;
   cursor: pointer;
   text-decoration: underline;
+  width: fit-content;
 }
 .register {
   font-size: 12px;
@@ -297,20 +298,24 @@ form {
   padding: 10px;
   background-color: var(--primary-color);
   color: black;
-  height: 250;
+  align-items: center;
+  height: auto;
   width: 250px;
+}
+.reset-email{
+  width: 90%;
 }
 h2{
   margin-bottom: 0;
 }
-.verify-note{
+.verify-note, .reset-note{
   text-align: center;
 }
-.verify-button{
+.verify-button, .reset-button{
   width: 100%;
   margin-bottom: 5px;
 }
-.skip-button{
+.skip-button, .cancel-button{
   background-color: white;
   color: black;
   border: 1px solid var(--secondary-color);

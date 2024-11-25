@@ -13,11 +13,9 @@ function VerifyEmail() {
     if (auth.currentUser) {
       try {
         await sendEmailVerification(auth.currentUser)
-          console.log("Verification email sent.");
           setVerificationMessage("Verification email sent");
           setMessageColor("green");
       } catch (error) {
-        console.error("Error sending verification email:", error.message);
         setVerificationMessage("Too many request, please try again later.");
         setMessageColor("red");
       }

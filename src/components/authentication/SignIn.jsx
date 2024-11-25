@@ -17,7 +17,9 @@ const SignIn = () => {
       await signIn(email, password);
       navigate("/home");
     } catch (error) {
-      errorMessage.textContent = error.code;
+      const errorCode = error.code || "unknown-error";
+      const formattedError = errorCode.split("/")[1] || errorCode;
+      errorMessage.textContent = formattedError;
       setTimeout(() => {
         errorMessage.textContent = "";
       }, 3000);
