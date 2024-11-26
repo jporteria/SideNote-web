@@ -2,16 +2,13 @@
   "manifest_version": 3,
   "name": "SideNote",
   "version": "1.0.0",
-  "description": "A simple note app",
+  "description": "The Ultimate Note-Taking Extension for Effortless Browsing",
   "permissions": ["sidePanel", "storage", "activeTab", "tabs"],
-  "host_permissions": [
-    "https://*.firebaseapp.com/*",
-    "https://*.googleapis.com/*"
-  ],
   "icons": {
-    "16": "images/notes.png",
-    "32": "images/notes.png",
-    "48": "images/notes.png"
+    "16": "images/notes16.png",
+    "32": "images/notes32.png",
+    "48": "images/notes48.png",
+    "128": "images/notes128.png"
   },
   "background": {
     "service_worker": "service_worker.js",
@@ -28,7 +25,6 @@
     {
       "resources": [
         "index.html",
-        "https://apis.google.com/js/api.js",
         "images/*"
       ],
       "matches": ["<all_urls>"]

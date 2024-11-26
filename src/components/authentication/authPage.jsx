@@ -1,7 +1,7 @@
 import AuthForm from "./authForm";
 import VerifyEmail from "./verifyEmail";
 import PasswordReset from "./passwordReset";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 function AuthPage() {
 

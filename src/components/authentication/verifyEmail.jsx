@@ -29,10 +29,7 @@ function VerifyEmail() {
     if (user) {
       await user.reload(); // Refresh the user's state
       if (user.emailVerified) {
-        console.log("Email verified!");
         navigate("/home");
-      } else {
-        console.log("Email not verified yet.");
       }
     }
   };
