@@ -7,13 +7,14 @@ function PasswordReset() {
   const [email, setEmail] = useState("");
   const [Message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("black")
-
+  
   const handleReset = async () => {
     const auth = getAuth();
     try {
       await sendPasswordResetEmail(auth, email);
       setMessage("Password reset email sent!");
       setMessageColor("green")
+      setEmail("")
       setTimeout(()=>{
         setMessage("")
         setMessageColor("black")
@@ -35,6 +36,7 @@ function PasswordReset() {
       </p>
       <input
         className="reset-email"
+        id="reset-email"
         type="email"
         placeholder="Enter your email"
         value={email}
