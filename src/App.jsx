@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
-// import LandingPage from "./components/landingPage";
 import AuthPage from "./components/authentication/authPage";
-// import GoogleSignInPage from "./components/google-signin";
 
 function App() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase/firebase.js";
-import { onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
+import { onAuthStateChanged, signInWithCustomToken } from "./firebase/firebase-sdk/firebase-auth.js";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
@@ -12,7 +12,7 @@ import {
   deleteDoc,
   setDoc,
   collection,
-} from "firebase/firestore";
+} from "./firebase/firebase-sdk/firestore.js";
 
 export const NotesContext = createContext({});
 

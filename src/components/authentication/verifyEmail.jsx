@@ -1,5 +1,5 @@
-import { getAuth, sendEmailVerification } from "firebase/auth";
-import React, { useState, useEffect } from "react";
+import { getAuth, sendEmailVerification } from "../../firebase/firebase-sdk/firebase-auth.js";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function VerifyEmail() {

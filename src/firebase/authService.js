@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from "firebase/auth";
+} from "./firebase-sdk/firebase-auth.js";
 import { auth } from "./firebase";
 
 // const googleProvider = new GoogleAuthProvider();
