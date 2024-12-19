@@ -1,7 +1,7 @@
 import { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase/firebase.js";
-import { onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
@@ -24,55 +24,22 @@ function Home() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Get token from localStorage
-  const getTokenFromStorage = () => {
-    return new Promise((resolve, reject) => {
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        resolve(token);
-      } else {
-        reject("No token found");
-      }
-    });
-  };
-
-  // Authenticate with token
-  const authenticateWithToken = async (token) => {
-    try {
-      await signInWithCustomToken(auth, token);
-      console.log("Authenticated with stored token");
-    } catch (error) {
-      console.error("Authentication error: ", error);
-    }
-  };
-
-  // Redirect if not authenticated
+  // Check the authentication state only once when component mounts
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
-        setUser(authUser);
-        console.log("User is logged in", authUser);
+        setUser(authUser); // Set user state when the user is logged in
       } else {
-        navigate("/auth");
-        console.log("User is logged out");
+        navigate("/auth"); // Redirect if the user is logged out
       }
     });
 
-    // Check if token is available when the component mounts
-    getTokenFromStorage()
-      .then((token) => {
-        authenticateWithToken(token); // Authenticate the user with the token
-      })
-      .catch(() => {
-        navigate("/auth"); // Redirect if no token is found
-      });
-
-    return () => unsubscribeAuth();
+    return () => unsubscribeAuth(); // Clean up listener on unmount
   }, [navigate]);
 
   // Load notes when user is authenticated
   useEffect(() => {
-    if (!user) return;
+    if (!user) return; // Exit if no user is authenticated
 
     const userNotesCollection = collection(db, "users", user.uid, "notes");
 
@@ -81,11 +48,11 @@ function Home() {
         id: doc.id,
         ...doc.data(),
       }));
-      setNotes(notesArr);
+      setNotes(notesArr); // Set notes when user is authenticated
     });
 
-    return unsubscribe;
-  }, [user]);
+    return unsubscribe; // Clean up listener on unmount
+  }, [user]); // Only run this effect when the user state changes
 
   const currentNote =
     notes.find((note) => note.id === currentNoteId) || notes[0];
