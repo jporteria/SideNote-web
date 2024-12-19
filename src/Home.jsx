@@ -1,7 +1,7 @@
 import { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase/firebase.js";
-import { onAuthStateChanged, signInWithCustomToken } from "./firebase/firebase-sdk/firebase-auth.js";
+import { onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
@@ -12,7 +12,7 @@ import {
   deleteDoc,
   setDoc,
   collection,
-} from "./firebase/firebase-sdk/firestore.js";
+} from "firebase/firestore";
 
 export const NotesContext = createContext({});
 
@@ -24,38 +24,37 @@ function Home() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-   const getTokenFromStorage = () => {
+  // Get token from localStorage
+  const getTokenFromStorage = () => {
     return new Promise((resolve, reject) => {
-      chrome.storage.local.get(["authToken"], (result) => {
-        if (result.authToken) {
-          resolve(result.authToken);
-        } else {
-          reject("No token found");
-        }
-      });
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        resolve(token);
+      } else {
+        reject("No token found");
+      }
     });
   };
-  
+
   // Authenticate with token
-   const authenticateWithToken = async (token) => {
+  const authenticateWithToken = async (token) => {
     try {
       await signInWithCustomToken(auth, token);
-      // console.log("Authenticated with stored token");
+      console.log("Authenticated with stored token");
     } catch (error) {
-      // console.error(error);
+      console.error("Authentication error: ", error);
     }
   };
-
 
   // Redirect if not authenticated
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         setUser(authUser);
-        // console.log('user is logged in', authUser)
+        console.log("User is logged in", authUser);
       } else {
         navigate("/auth");
-        // console.log('user is logged out')
+        console.log("User is logged out");
       }
     });
 
@@ -164,7 +163,6 @@ function Home() {
       }}
     >
       <main>
-        {/* <Profile /> */}
         {notes.length > 0 ? (
           <Split
             sizes={[90, 10]}

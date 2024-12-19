@@ -8,24 +8,23 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    try{
-      chrome.storage.local.get(["authToken"], (result) => {
-        if (result.authToken) {
-          navigate("/home");
-        } else {
-          navigate("/auth");
-        }
-      });
-    }catch(err){
-      console.log(err)
+    try {
+      const authToken = localStorage.getItem("authToken");
+      if (authToken) {
+        navigate("/home");
+      } else {
+        navigate("/auth");
+      }
+    } catch (err) {
+      console.log("Error checking authToken:", err);
     }
-  }, []);
+  }, [navigate]); 
 
   return (
-      <Routes>
-        <Route path="/auth/*" element={<AuthPage />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
+    <Routes>
+      <Route path="/auth/*" element={<AuthPage />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   );
 }
 
