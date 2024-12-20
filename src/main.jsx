@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/SideNote-web/">
       <App />
     </BrowserRouter>
   </StrictMode>
