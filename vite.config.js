@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: '/SideNote-web/',
   build: {
-    outDir: 'dist', // Ensure this matches your build folder
+    outDir: 'dist',
   },
   plugins: [react()],
 });
