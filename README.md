@@ -31,7 +31,7 @@ Ensure you have the following installed:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/sidenote.git
+git clone https://github.com/jporteria/SideNote-web.git
 cd sidenote
 ```
 
