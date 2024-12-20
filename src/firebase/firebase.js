@@ -3,13 +3,13 @@ import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth"
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAepMX0OANiAVjAIgsM9MyRnHo_NSjodNE",
-  authDomain: "sidenote-d6c88.firebaseapp.com",
-  projectId: "sidenote-d6c88",
-  storageBucket: "sidenote-d6c88.firebasestorage.app",
-  messagingSenderId: "327144965832",
-  appId: "1:327144965832:web:4bf9631e40d13055a487fd",
-  measurementId: "G-8V0YNKKZH5"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

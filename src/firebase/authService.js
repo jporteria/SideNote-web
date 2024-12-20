@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase";
 
-const googleProvider = new GoogleAuthProvider();  // Create a new GoogleAuthProvider
+const googleProvider = new GoogleAuthProvider(); // Create a new GoogleAuthProvider
 
 const getIdTokenAndStore = async () => {
   const currentUser = auth.currentUser;
@@ -21,13 +21,21 @@ const getIdTokenAndStore = async () => {
 };
 
 export const signUp = async (email, password) => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
   const token = await getIdTokenAndStore();
   return { user: userCredential.user, token };
 };
 
 export const signIn = async (email, password) => {
-  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
   const token = await getIdTokenAndStore();
   return { user: userCredential.user, token };
 };
@@ -47,7 +55,7 @@ export const signInWithGoogle = async () => {
 
 export const logOut = async () => {
   await signOut(auth);
-  localStorage.removeItem("authToken");  // Remove token from localStorage
+  localStorage.removeItem("authToken"); // Remove token from localStorage
 };
 
 export const onAuthStateChange = (callback) => {

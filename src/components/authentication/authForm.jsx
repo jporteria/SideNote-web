@@ -13,9 +13,9 @@ function AuthForm() {
   // Handle Google Sign-In
   const handleGoogleSignIn = async () => {
     try {
-      const { user, token } = await signInWithGoogle();
-      console.log("Signed in with Google:", user);
-      console.log("Token:", token);
+      await signInWithGoogle();
+      // console.log("Signed in with Google:", user);
+      // console.log("Token:", token);
       navigate("/home");
     } catch (error) {
       console.error("Google sign-in failed:", error);

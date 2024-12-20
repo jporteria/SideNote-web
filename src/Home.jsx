@@ -1,7 +1,7 @@
 import { useEffect, useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase/firebase.js";
-import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import Editor from "./components/editor.jsx";
 import Sidebar from "./components/sidebar.jsx";
 import Split from "react-split";
@@ -132,7 +132,7 @@ function Home() {
       <main>
         {notes.length > 0 ? (
           <Split
-            sizes={[90, 10]}
+            sizes={[900, 80]}
             direction="horizontal"
             className="split"
             gutterSize={3}

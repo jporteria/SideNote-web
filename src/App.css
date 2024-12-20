@@ -286,7 +286,7 @@ form {
   background-color: var(--primary-color);
   color: black;
   height: auto;
-  width: 250px;
+  width: 350px;
   align-items: center;
 }
 .passwordResetForm{
