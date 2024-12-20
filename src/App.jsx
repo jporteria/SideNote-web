@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
 import AuthPage from "./components/authentication/authPage";
@@ -18,15 +18,13 @@ function App() {
     } catch (err) {
       console.log("Error checking authToken:", err);
     }
-  }, [navigate]);
+  }, [navigate]); 
 
   return (
-    <Router basename="/SideNote-web">  {/* Ensure this matches the base path */}
-      <Routes>
-        <Route path="/auth/*" element={<AuthPage />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/auth/*" element={<AuthPage />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   );
 }
 
