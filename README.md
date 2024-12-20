@@ -24,7 +24,7 @@ Follow the steps below to clone, install, and run the SideNote app locally.
 
 Ensure you have the following installed:
 
-- Node.js (>= 14.x)
+- Node.js (version 14 or higher)
 - npm (Node Package Manager)
 - A Firebase project with authentication and Firestore enabled
 
@@ -56,12 +56,13 @@ npm install
 6. Create a `.env` file in the root of your project and add the Firebase configuration:
 
 ```env
-REACT_APP_FIREBASE_API_KEY=your-api-key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
-REACT_APP_FIREBASE_PROJECT_ID=your-project-id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
-REACT_APP_FIREBASE_APP_ID=your-app-id
+VITE_FIREBASE_API_KEY=your-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+VITE_FIREBASE_APP_ID=your-app-id
+VITE_FIREBASE_MEASUREMENT_ID=your-measurement-id
 ```
 
 ### Run the App
@@ -69,10 +70,10 @@ REACT_APP_FIREBASE_APP_ID=your-app-id
 Start the development server:
 
 ```bash
-npm start
+npm run dev
 ```
 
-The app will be available at `http://localhost:3000`.
+The app will be available at `http://localhost:5173`.
 
 ---
 
