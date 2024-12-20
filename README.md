@@ -1,6 +1,6 @@
-# [SideNote](https://sidenote.onrender.com/)
+# [SideNote-web](https://sidenote.onrender.com/)
 
-SideNote is a note-taking web application designed to provide a seamless experience for users who want to take notes while browsing the internet or watching videos. Originally built as a Chrome extension, it was transitioned to a web-based application due to Manifest V3 restrictions. The app is powered by React.js for the frontend and Firebase for authentication and real-time data synchronization.
+SideNote is a note-taking web application designed to provide a seamless experience for users who want to take notes without leaving the browser. Originally built as a Chrome extension, it was transitioned to a web-based application due to Manifest V3 restrictions. The app is powered by React.js for the frontend and Firebase for authentication and real-time data synchronization.
 
 ## Features
 
@@ -87,7 +87,7 @@ To deploy the application:
    npm run build
    ```
 
-2. Deploy the `build` folder to your preferred hosting service (e.g., Firebase Hosting, Vercel, Netlify).
+2. Deploy the `build` folder to your preferred hosting service (e.g., Render, Vercel, Netlify).
 
 ---
 
