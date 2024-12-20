@@ -18,7 +18,7 @@ function App() {
     } catch (err) {
       console.log("Error checking authToken:", err);
     }
-  }, [navigate]); 
+  }, []); 
 
   return (
     <Routes>
