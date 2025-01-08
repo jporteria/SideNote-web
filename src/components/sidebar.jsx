@@ -35,7 +35,7 @@ export default function Sidebar() {
             className="delete--button"
             onClick={() => deleteNote(note.id)}
           >
-            x
+            <img src="images/delete.png" alt="x" width="100%" height="100%"/>
           </button>
         </div>
       </div>

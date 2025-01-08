@@ -152,9 +152,11 @@ input {
   background: none;
   border: none;
   display: none;
-  background-color: red;
+  /* background-color: red; */
   padding: 0 3px;
   margin-right: 3px;
+  height: 20%;
+  width: 20%;
 }
 .title:hover > .delete--button {
   display: block;
